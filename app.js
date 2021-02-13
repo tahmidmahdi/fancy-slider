@@ -48,7 +48,10 @@ const selectItem = (event, img) => {
     alert('Hey, Already added !')
   }
 }
-var timer
+
+
+
+var timer=1;
 const createSlider = () => {
   // check slider image length
   if (sliders.length < 2) {
@@ -56,7 +59,7 @@ const createSlider = () => {
     return;
   }
   // crate slider previous next area
-  sliderContainer.innerHTML = '';
+  sliderContainer.innerHTML = '';  //sliderContainer holds slider images
   const prevNext = document.createElement('div');
   prevNext.className = "prev-next d-flex w-100 justify-content-between align-items-center";
   prevNext.innerHTML = ` 
@@ -68,7 +71,7 @@ const createSlider = () => {
   document.querySelector('.main').style.display = 'block';
   // hide image aria
   imagesArea.style.display = 'none';
-  const duration = document.getElementById('duration').value || 1000;
+  const duration = document.getElementById('doration').value || 1000;
   sliders.forEach(slide => {
     let item = document.createElement('div')
     item.className = "slider-item";
@@ -111,7 +114,7 @@ const changeSlide = (index) => {
 }
 
 searchBtn.addEventListener('click', function () {
-  document.querySelector('.main').style.display = 'none';
+  document.querySelector('.main').style.display = "none";
   clearInterval(timer);
   const search = document.getElementById('search');
   getImages(search.value)
@@ -119,5 +122,5 @@ searchBtn.addEventListener('click', function () {
 })
 
 sliderBtn.addEventListener('click', function () {
-  createSlider()
+  createSlider();
 })
