@@ -36,6 +36,23 @@ const getImages = (query) => {
     .catch(err => console.log(err))
 }
 
+
+
+var searchButton = document.getElementById("search-btn");
+var searchField = document.getElementById("search");
+
+searchField.addEventListener("keypress", function (event) {
+    // event.preventDefault();
+    console.log('keycode', event.key, event.keyCode);
+    if (event.key === 'Enter') {
+        searchButton.click();
+    }
+});
+
+
+
+
+
 let slideIndex = 0;
 const selectItem = (event, img) => {
   let element = event.target;
@@ -71,7 +88,14 @@ const createSlider = () => {
   document.querySelector('.main').style.display = 'block';
   // hide image aria
   imagesArea.style.display = 'none';
-  const duration = document.getElementById('doration').value || 1000;
+
+  // takes slider duration and handle duration calculation
+  let duration = document.getElementById('doration').value || 1000;
+
+  // if the duration value is negative then it converts it into positive 
+  if(duration < 0){
+    duration = -1  * duration;
+  }
   sliders.forEach(slide => {
     let item = document.createElement('div')
     item.className = "slider-item";
