@@ -19,9 +19,9 @@ const KEY = '20264962-f57c90a3606bd03b4a9a5bd09';
 
 // show images 
 const showImages = (images) => {
-  
-    toggleSpinner();
-  
+
+  toggleSpinner();
+
   // toggleSpinner();
   imagesArea.style.display = 'block';
   gallery.innerHTML = '';
@@ -32,9 +32,9 @@ const showImages = (images) => {
     div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
     div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
     gallery.appendChild(div)
-  
+
   })
-  
+
 
 
 }
@@ -46,13 +46,26 @@ const showImages = (images) => {
 
 
 const getImages = (query) => {
- 
+
   fetch(`https://pixabay.com/api/?key=${KEY}&q=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
     .then(data => showImages(data.hits))
     .catch(err => console.log(err))
-    
+
 }
+
+
+// const getVideos = (query) => {
+//   fetch(`https://pixabay.com/api/videos/?key=20264962-f57c90a3606bd03b4a9a5bd09&q=${query}&pretty=true`)
+//     .then(res => res.json())
+//     .then(data => showVideos(data.hits))
+// }
+
+// const showVideos = (videos) => {
+//   const inputText = document.getElementById('search').value
+//   getVideos(inputText);
+//   console.log(videos);
+// }
 
 
 
@@ -60,15 +73,15 @@ var searchButton = document.getElementById("search-btn");
 var searchField = document.getElementById("search");
 
 searchField.addEventListener("keypress", function (event) {
-    // event.preventDefault();
-    console.log('keycode', event.key, event.keyCode);
-    if (event.key === 'Enter') {
-        count++;
-        console.log('enter',count1);
-        toggleSpinner();
-        searchButton.click();
-        
-    }
+  // event.preventDefault();
+  // console.log('keycode', event.key, event.keyCode);
+  if (event.key === 'Enter') {
+    count++;
+    // console.log('enter',count1);
+    toggleSpinner();
+    searchButton.click();
+
+  }
 });
 
 
@@ -77,25 +90,25 @@ searchField.addEventListener("keypress", function (event) {
 
 let slideIndex = 0;
 const selectItem = (event, img) => {
-  console.log(event.target);
+  // console.log(event.target);
   let element = event.target;
   element.classList.add('added');
- 
+
   let item = sliders.indexOf(img);
   if (item === -1) {
     sliders.push(img);
-    console.log('sliders: ',sliders);
-  } 
+    // console.log('sliders: ',sliders);
+  }
   else {
-    
+
     const addedHide = document.getElementsByClassName('added');
     element.classList.remove('added')
     sliders.pop(img)
-    
+
     // for (let i = 0; i < sliders.length; i++) {
     //   if(event == sliders[i]){
     //     console.log('***********************************************************');
-       
+
     //     // sliders[i].pop(img);
     //     // console.log(sliders[i])
     //   }
@@ -104,16 +117,16 @@ const selectItem = (event, img) => {
     //   //   console.log(arr[i]);
     //   //   sliders[i] = arr[i];
     //   // }
-      
+
     // }
   }
 }
 
 
 
-var timer=1;
+var timer = 1;
 const createSlider = () => {
-  
+
   // check slider image length
   if (sliders.length < 2) {
     alert('Select at least 2 image.')
@@ -137,8 +150,8 @@ const createSlider = () => {
   let duration = document.getElementById('doration').value || 1000;
 
   // if the duration value is negative then it converts it into positive 
-  if(duration < 0){
-    duration = -1  * duration;
+  if (duration < 0) {
+    duration = -1 * duration;
   }
   sliders.forEach(slide => {
     let item = document.createElement('div')
@@ -148,14 +161,45 @@ const createSlider = () => {
     alt="">`;
     sliderContainer.appendChild(item)
   })
-  
+
   changeSlide(0)
   timer = setInterval(function () {
     slideIndex++;
     changeSlide(slideIndex);
   }, duration);
   toggleSpinner();
+
+
+
+  const textTyped = document.getElementById('search').value;
+  fetch(`https://pixabay.com/api/videos/?key=20264962-f57c90a3606bd03b4a9a5bd09&q=${textTyped}&pretty=true`)
+    .then(response => response.json())
+    .then(data => getVideo(data.hits))
+    .catch(err => console.log(err))
+  const getVideo = (videos) => {
+    videos.forEach(video => {
+      const videoControls = video.videos.large.url;
+      // const mainDiv = document.getElementById('video');
+      // const dDiv = document.getElementById('vDiv');
+      // const play = `<video controls>
+      //   <source src="${videoControls}" >
+      //   </video>`
+      // dDiv.appendChild(play)
+      console.log(videoControls);
+      const videoDiv = document.getElementById('video-div');
+      const videoDivNew =  document.createElement('div')
+      videoDivNew.innerHTML = `<video width="320" height="240" controls>
+      <source src="${videoControls}" type="video/mp4">
+      </video>
+    `
+      videoDiv.appendChild(videoDivNew);
+
+    })
+
+
+
   
+  }
 }
 
 // change slider index 
@@ -187,20 +231,22 @@ const changeSlide = (index) => {
 searchBtn.addEventListener('click', function () {
   // count++;
   document.querySelector('.main').style.display = "none";
-    
-    console.log('click', count);
-    if(count >= 1){
-      console.log('already Entered')
-    }
-    else{
-      toggleSpinner();
-    }
+
+
+  if (count >= 1) {
+    console.log('already Entered')
+  }
+  else {
+    toggleSpinner();
+  }
 
   clearInterval(timer);
   const search = document.getElementById('search');
-  
+
   getImages(search.value)
   sliders.length = 0;
+
+
 })
 
 sliderBtn.addEventListener('click', function () {
@@ -209,7 +255,7 @@ sliderBtn.addEventListener('click', function () {
 })
 
 // const toggleSlider = (show) => {
-  
+
 // }
 
 
