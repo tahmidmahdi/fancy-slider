@@ -59,6 +59,7 @@ searchField.addEventListener("keypress", function (event) {
     // event.preventDefault();
     console.log('keycode', event.key, event.keyCode);
     if (event.key === 'Enter') {
+        count++;
         console.log('enter',count1);
         toggleSpinner();
         searchButton.click();
@@ -86,9 +87,6 @@ const selectItem = (event, img) => {
     const addedHide = document.getElementsByClassName('added');
     element.classList.remove('added')
     sliders.pop(img)
-
-
-
     
     // for (let i = 0; i < sliders.length; i++) {
     //   if(event == sliders[i]){
@@ -184,6 +182,12 @@ searchBtn.addEventListener('click', function () {
   document.querySelector('.main').style.display = "none";
     
     console.log('click', count);
+    if(count >= 1){
+      console.log('alrady Entered')
+    }
+    else{
+      toggleSpinner();
+    }
     //  toggleSpinner();
   // toggleSpinnerClick();
   // toggleSpinnerBtn();
