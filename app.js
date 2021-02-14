@@ -1,5 +1,6 @@
 var count = 0;
 var count1 = 0;
+var arr = [];
 const imagesArea = document.querySelector('.images');
 const gallery = document.querySelector('.gallery');
 const galleryHeader = document.querySelector('.gallery-header');
@@ -78,9 +79,31 @@ const selectItem = (event, img) => {
   let item = sliders.indexOf(img);
   if (item === -1) {
     sliders.push(img);
-  } else {
+    console.log('sliders: ',sliders);
+  } 
+  else {
+    
     const addedHide = document.getElementsByClassName('added');
     element.classList.remove('added')
+    sliders.pop(img)
+
+
+
+    
+    // for (let i = 0; i < sliders.length; i++) {
+    //   if(event == sliders[i]){
+    //     console.log('***********************************************************');
+       
+    //     // sliders[i].pop(img);
+    //     // console.log(sliders[i])
+    //   }
+    //   // else{
+    //   //   arr[i] = sliders[i];
+    //   //   console.log(arr[i]);
+    //   //   sliders[i] = arr[i];
+    //   // }
+      
+    // }
   }
 }
 
