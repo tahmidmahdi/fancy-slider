@@ -1,3 +1,5 @@
+var count = 0;
+var count1 = 0;
 const imagesArea = document.querySelector('.images');
 const gallery = document.querySelector('.gallery');
 const galleryHeader = document.querySelector('.gallery-header');
@@ -7,6 +9,7 @@ const sliderContainer = document.getElementById('sliders');
 // selected image 
 let sliders = [];
 
+// toggleSpinner();
 
 // If this key doesn't work
 // Find the name in the url and go to their website
@@ -15,6 +18,10 @@ const KEY = '20264962-f57c90a3606bd03b4a9a5bd09';
 
 // show images 
 const showImages = (images) => {
+  
+    toggleSpinner();
+  
+  // toggleSpinner();
   imagesArea.style.display = 'block';
   gallery.innerHTML = '';
   // show gallery title
@@ -27,6 +34,12 @@ const showImages = (images) => {
   })
 
 }
+
+
+
+
+
+
 
 const getImages = (query) => {
  
@@ -45,7 +58,10 @@ searchField.addEventListener("keypress", function (event) {
     // event.preventDefault();
     console.log('keycode', event.key, event.keyCode);
     if (event.key === 'Enter') {
+        console.log('enter',count1);
+        toggleSpinner();
         searchButton.click();
+        
     }
 });
 
@@ -55,6 +71,7 @@ searchField.addEventListener("keypress", function (event) {
 
 let slideIndex = 0;
 const selectItem = (event, img) => {
+  console.log(event.target);
   let element = event.target;
   element.classList.add('added');
  
@@ -62,7 +79,8 @@ const selectItem = (event, img) => {
   if (item === -1) {
     sliders.push(img);
   } else {
-    alert('Hey, Already added !')
+    const addedHide = document.getElementsByClassName('added');
+    element.classList.remove('added')
   }
 }
 
@@ -109,6 +127,7 @@ const createSlider = () => {
     slideIndex++;
     changeSlide(slideIndex);
   }, duration);
+  // toggleSpinner();
 }
 
 // change slider index 
@@ -138,9 +157,17 @@ const changeSlide = (index) => {
 }
 
 searchBtn.addEventListener('click', function () {
+  // count++;
   document.querySelector('.main').style.display = "none";
+    
+    console.log('click', count);
+    //  toggleSpinner();
+  // toggleSpinnerClick();
+  // toggleSpinnerBtn();
+
   clearInterval(timer);
   const search = document.getElementById('search');
+  // toggleSpinner();
   getImages(search.value)
   sliders.length = 0;
 })
@@ -148,3 +175,17 @@ searchBtn.addEventListener('click', function () {
 sliderBtn.addEventListener('click', function () {
   createSlider();
 })
+
+// const toggleSlider = (show) => {
+  
+// }
+
+
+const toggleSpinner = () => {
+  const spinner = document.getElementById('loading-spinner');
+  spinner.classList.toggle('d-none');
+}
+// const toggleSpinnerBtn = () => {
+//   const spinner = document.getElementById('loading-spinner');
+//   spinner.classList.toggle('d-none');
+// }
