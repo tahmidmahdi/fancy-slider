@@ -32,7 +32,10 @@ const showImages = (images) => {
     div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
     div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
     gallery.appendChild(div)
+  
   })
+  
+
 
 }
 
@@ -48,6 +51,7 @@ const getImages = (query) => {
     .then(response => response.json())
     .then(data => showImages(data.hits))
     .catch(err => console.log(err))
+    
 }
 
 
@@ -109,6 +113,7 @@ const selectItem = (event, img) => {
 
 var timer=1;
 const createSlider = () => {
+  
   // check slider image length
   if (sliders.length < 2) {
     alert('Select at least 2 image.')
@@ -143,12 +148,14 @@ const createSlider = () => {
     alt="">`;
     sliderContainer.appendChild(item)
   })
+  
   changeSlide(0)
   timer = setInterval(function () {
     slideIndex++;
     changeSlide(slideIndex);
   }, duration);
-  // toggleSpinner();
+  toggleSpinner();
+  
 }
 
 // change slider index 
@@ -183,23 +190,21 @@ searchBtn.addEventListener('click', function () {
     
     console.log('click', count);
     if(count >= 1){
-      console.log('alrady Entered')
+      console.log('already Entered')
     }
     else{
       toggleSpinner();
     }
-    //  toggleSpinner();
-  // toggleSpinnerClick();
-  // toggleSpinnerBtn();
 
   clearInterval(timer);
   const search = document.getElementById('search');
-  // toggleSpinner();
+  
   getImages(search.value)
   sliders.length = 0;
 })
 
 sliderBtn.addEventListener('click', function () {
+  toggleSpinner();
   createSlider();
 })
 
